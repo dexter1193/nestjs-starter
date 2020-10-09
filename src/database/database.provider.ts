@@ -13,12 +13,12 @@ const databaseConnection = [
         provide: 'DATABASE_CONNECTION',
         inject: [ConfigService],
         useFactory: async (configService: ConfigService) => await createConnection({
-            type: configService.get('DBTYPE'),
-            host: configService.get('DBHOST'),
-            port: configService.get('DBPORT'),
-            username: configService.get('DBUSERNAME'),
-            password: configService.get('DBPASSWORD'),
-            database: configService.get('DBNAME'),
+            type: configService.get('DBConfig.DBTYPE'),
+            host: configService.get('DBConfig.DBHOST'),
+            port: configService.get('DBConfig.DBPORT'),
+            username: configService.get('DBConfig.DBUSERNAME'),
+            password: configService.get('DBConfig.DBPASSWORD'),
+            database: configService.get('DBConfig.DBNAME'),
             synchronize: true,
             entities: [
                 'dist/**/*.entity{.ts,.js}'
