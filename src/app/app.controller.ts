@@ -4,8 +4,10 @@
  * Note:
  */
 
-import { Controller, Req, Post, Get, Inject, Logger, LoggerService } from '@nestjs/common';
-import { AuthService } from 'src/auth/auth.service';
+import { Controller, Req, Post, Get, Inject, Logger, LoggerService, UseGuards } from '@nestjs/common';
+import { AuthService } from '../auth/auth.service';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { CurrentUser } from '../common/user.decorator';
 import { AppService } from './app.service';
 
 @Controller()
@@ -27,5 +29,11 @@ export class AppController {
     this.logger.error('we are in');
     this.logger.debug(req.body);
     return this.authService.login(req.body);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/user')
+  usingDecorator(@CurrentUser() user) {
+    return user.userId
   }
 }
