@@ -12,6 +12,8 @@ import { AppService } from './app.service';
 import { AppConfig } from '../config/app.config';
 import { DatabaseConfig } from '../config/database.config';
 import { DatabaseModule } from '../database/database.module';
+import { WinstonModule } from 'nest-winston';
+import { WinstonConfigService } from '../config/logger.config';
 
 @Module({
   imports: [
@@ -19,6 +21,9 @@ import { DatabaseModule } from '../database/database.module';
 			isGlobal: true,
 			expandVariables: true,
 			load: [AppConfig, DatabaseConfig]
+    }),
+    WinstonModule.forRootAsync({
+      useClass: WinstonConfigService,
     }),
     AuthModule,
     DatabaseModule
